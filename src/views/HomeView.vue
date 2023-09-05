@@ -88,10 +88,10 @@ import Footer from "@/views/includes/Footer.vue";
            <router-link to="group" class="btn btn-primary m-2">Machine Learning</router-link>
            <router-link to="group" class="btn btn-primary m-2">Mysql Databases</router-link>
            <router-link to="group" class="btn btn-primary m-2">Java Developers</router-link>
+           <router-link to="group" class="btn btn-primary m-2">Laravel </router-link>
+           <router-link to="group" class="btn btn-primary m-2">Laravel </router-link>
            <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>
+           <router-link to="group" class="btn btn-primary m-2">Laravel</router-link>
            <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>
            <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>
            <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>

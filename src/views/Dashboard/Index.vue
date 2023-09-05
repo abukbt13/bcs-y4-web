@@ -1,0 +1,16 @@
+<template>
+<Header />
+  <router-view></router-view>
+</template>
+
+<script>
+import Header from "@/views/includes/Header.vue";
+export default {
+  name: "Index",
+  components: {Header}
+}
+</script>
+
+<style scoped>
+
+</style>
