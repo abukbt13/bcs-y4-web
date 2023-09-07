@@ -1,6 +1,15 @@
 
 <script setup>
+import {useRouter} from "vue-router";
 
+const router = useRouter()
+
+const token = localStorage.getItem('token')
+const logout =async ()=>{
+  localStorage.removeItem('token')
+  localStorage.removeItem('status')
+  await router.push('/login')
+}
 </script>
 
 <template>
@@ -14,13 +23,19 @@
         <ul class="navbar-nav">
 
           <li class="nav-item">
-            <a  class="nav-link text-primary" href="/dashboard">Dashboard</a>
+            <router-link  class="nav-link text-primary" to="/dashboard">Dashboard</router-link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-primary" href="/login">Login</a>
+          <li class="nav-item" v-if="token"  @click="logout()">
+            <a class="nav-link text-primary" href="/login">Logout</a>
           </li>
+          <li class="nav-item" v-else>
+            <a  class="nav-link text-primary" href="/login">Login/Register</a>
+          </li>
+
         </ul>
+
       </div>
+
     </div>
   </nav>
 </template>

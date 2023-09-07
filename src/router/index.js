@@ -13,7 +13,8 @@ import Mygroups from "@/views/Dashboard/Mygroups.vue";
 import Mylinks from "@/views/Dashboard/Mylinks.vue";
 import Myvideos from "@/views/Dashboard/Myvideos.vue";
 import Mydiscussion from "@/views/Dashboard/Mydiscussion.vue";
-
+import Login from "@/views/auth/Login.vue"
+import Register from "@/views/auth/Register.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,6 +26,14 @@ const router = createRouter({
     {
       path: '/unit',
       component: Unitindex
+    },
+    {
+      path: '/login',
+      component: Login
+    },
+    {
+      path: '/register',
+      component: Register
     },
     {
       path:'/dashboard',

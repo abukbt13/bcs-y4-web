@@ -24,7 +24,9 @@
 
     </ul>
   </div>
-<p>My groups here</p>
+
+
+  <p>My groups here</p>
 </template>
 
 <script>
