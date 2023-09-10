@@ -44,7 +44,7 @@ onMounted(()=>{
 <template>
   <div className="container d-flex bg-light align-items-center">
     <div className="">
-      <img style="border-radius: 50%;" src="/student.jpeg" width="200" height="200" alt="">
+      <img style="border-radius: 50%;"  :src="'http://127.0.0.1:8000/profiles/'+profile" width="200" height="200" alt="">
     </div>
     <ul className="nav nav-tabs ms-4">
       <li className="nav-item">

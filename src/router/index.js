@@ -15,6 +15,7 @@ import Myvideos from "@/views/Dashboard/Myvideos.vue";
 import Mydiscussion from "@/views/Dashboard/Mydiscussion.vue";
 import Login from "@/views/auth/Login.vue"
 import Register from "@/views/auth/Register.vue"
+import Group from "@/views/Group/Group.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -61,28 +62,33 @@ const router = createRouter({
         }
       ]
     },
+
     {
-      path: '/group',
+      path: '/show_group',
       component: GroupIndex,
       children:[
         {
-          path: '/group',
+          path: '/show_group',
+          component: Group
+        },
+        {
+          path: '/show_group/posts',
           component: Posts
         },
         {
-          path: '/group/events',
+          path: '/show_group/events',
           component: Events
         },
         {
-          path: '/group/videos',
+          path: '/show_group/videos',
           component: Videos
         },
         {
-          path: '/group/discussion',
+          path: '/show_group/discussion',
           component: Discussion
         },
         {
-          path: '/group/links',
+          path: '/show_group/links',
           component: Links
         }
       ]

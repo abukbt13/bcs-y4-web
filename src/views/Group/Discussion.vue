@@ -14,25 +14,24 @@ import Header from "@/views/includes/Header.vue";
         <span>Menu</span><br>
         <i style="font-size:30px;" className="bi  p-2 bi-list "></i>
       </div>
-      <ul className="nav ps-4 nav-pills  nav-fill">
-        <li className="nav-item">
-          <router-link className="nav-link" aria-current="page" to="/group">Posts</router-link>
+      <ul class="nav ps-4 nav-pills  nav-fill">
+        <li class="nav-item">
+          <router-link class="nav-link" :to="{ path: 'posts', query: { name: groupName } }">posts</router-link>
         </li>
-        <li className="nav-item">
-          <router-link className="nav-link " to="/group/events">Events</router-link>
+        <li class="nav-item">
+          <router-link class="nav-link active" :to="{ path: 'discussion', query: { name: groupName } }">Discussion</router-link>
         </li>
-        <li className="nav-item">
-          <router-link className="nav-link active" to="/group/discussion">Discussions</router-link>
+        <li class="nav-item">
+          <router-link class="nav-link" :to="{ path: 'links', query: { name: groupName } }">Links</router-link>
         </li>
-        <li className="nav-item">
-          <router-link className="nav-link" to="/group/links">Links</router-link>
+        <li class="nav-item">
+          <router-link class="nav-link" :to="{ path: 'events', query: { name: groupName } }">Events</router-link>
         </li>
-        <li className="nav-item">
-          <router-link className="nav-link" to="/group/videos">Videos</router-link>
+        <li class="nav-item">
+          <router-link class="nav-link" :to="{ path: 'videos', query: { name: groupName } }">Videos</router-link>
         </li>
 
-      </ul>
-    </div>
+      </ul>    </div>
     <!--   start of offcanvas-->
     <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample"
          aria-labelledby="offcanvasExampleLabel">

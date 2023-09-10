@@ -15,23 +15,22 @@ import Header from "@/views/includes/Header.vue";
       </div>
       <ul class="nav ps-4 nav-pills  nav-fill">
         <li class="nav-item">
-          <router-link class="nav-link" aria-current="page" to="/group">Posts</router-link>
+          <router-link class="nav-link" :to="{ path: 'posts', query: { name: groupName } }">posts</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/group/events">Events</router-link>
+          <router-link class="nav-link" :to="{ path: 'discussion', query: { name: groupName } }">Discussion</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/group/discussion">Discussions</router-link>
+          <router-link class="nav-link" :to="{ path: 'links', query: { name: groupName } }">Links</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/group/links">Links</router-link>
+          <router-link class="nav-link" :to="{ path: 'events', query: { name: groupName } }">Events</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link active" to="/group/videos">Videos</router-link>
+          <router-link class="nav-link active" :to="{ path: 'videos', query: { name: groupName } }">Videos</router-link>
         </li>
 
-      </ul>
-    </div>
+      </ul>    </div>
     <!--   start of offcanvas-->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
