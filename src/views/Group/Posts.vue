@@ -10,6 +10,7 @@ const  file = ref('')
 // Access the router instance
 const router = useRouter();
 import {auth} from "@/compossables/auth";
+import Header from "@/views/includes/Header.vue";
 const {base_url,authHeader}=auth()
 
 function fileUpload(e){
@@ -30,9 +31,14 @@ const savePost = async () => {
   formData.append('group', groupName.value)
   const response = await axios.post(base_url.value+'post/upload', formData,authHeader);
   if (response.status === 200) {
-    console.log(response)
+   await showPosts()
   }
 }
+function like (id){
+  const response =  axios.post(`${base_url.value}post/like/${id}`,authHeader);
+  // await showPosts()
+}
+
 
 // Use onMounted to capture the query parameter after the component is mounted
 onMounted(() => {
@@ -119,7 +125,6 @@ onMounted(() => {
               Create a post
             </button>
             </div>
-{{posts}}
 
       <!-- Modal -->
                   <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -148,48 +153,33 @@ onMounted(() => {
                     </div>
                   </div>
       <!--      CREATE POST-->
-                <div class="d-flex align-items-center">
-                  <img src="/student.jpeg" class="rounded" width="50" height="50" alt="No image"> <p class="ms-2 mt-3">Alan Kibet</p></div>
-                <p>
-                  Feeling Excited about my coding it is running well.This week I hope I am gonna make my best site.
-                </p>
-                <img src="/student.jpeg" class="img-fluid" alt=""><br>
-                <div  class="feed row ">
-                  <div class="col d-flex justify-content-center align-items-center">
-                    <i style="font-size:28px;color:#8f13e8;" class="bi p-2 bi-hand-thumbs-up-fill "></i><span class="">23</span>
-                  </div>
-                  <div class="col d-flex justify-content-center border-start align-items-center">
-                    <i style="font-size:28px;color:#8f13e8;" class="bi p-2 bi-hand-thumbs-up-fill "></i><span class="">React</span>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <img src="/student.jpeg" class="rounded" width="50" height="50" alt="No image"> <p class="ms-2 mt-3">Alan Kibet</p></div>
-                <p>
-                  Feeling Excited about my coding it is running well
-                </p>
-                <img src="/student.jpeg" class="img-fluid" alt=""><br>
-                <div  class="feed row ">
-                  <div class="col d-flex justify-content-center align-items-center">
-                    <i style="font-size:28px;color:#8f13e8;" class="bi p-2 bi-hand-thumbs-up-fill "></i><span class="">543</span>
-                  </div>
-                  <div class="col d-flex justify-content-center border-start align-items-center">
-                    <i style="font-size:28px;color:#8f13e8;" class="bi p-2 bi-hand-thumbs-up-fill "></i><span class="">React</span>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <img src="/student.jpeg" class="rounded" width="50" height="50" alt="No image"> <p class="ms-2 mt-3">Alan Kibet</p></div>
-                <p>
-                  Feeling Excited about my coding it is running well
-                </p>
-                <img src="/student.jpeg" class="img-fluid" alt=""><br>
-                <div  class="feed row">
-                  <div class="col d-flex justify-content-center align-items-center">
-                    <i style="font-size:28px;color:#8f13e8;" class="bi p-2 bi-hand-thumbs-up-fill "></i><span class="">543</span>
-                  </div>
-                  <div class="col d-flex justify-content-center border-start align-items-center">
-                    <i style="font-size:28px;color:#8f13e8;" class="bi p-2 bi-hand-thumbs-up-fill "></i><span class="">React</span>
-                  </div>
-                </div>
+
+    <div class="single-post" v-for="post in posts" :key="post">
+      <div class="d-flex align-items-center">
+        <img :src="'http://127.0.0.1:8000/profiles/'+post.profile" class="rounded" width="50" height="50" alt="No image"> <p class="ms-2 mt-3">Alan Kibet</p></div>
+      <p>
+        {{ post.description}}
+      </p>
+      <img :src="'http://127.0.0.1:8000/posts/'+post.file" class="img-fluid" alt=""><br>
+      <div  class="feed row ">
+        <div class="col d-flex justify-content-center align-items-center">
+          <i style="font-size:28px;color:#8f13e8;" @click="like(post.id)" class="bi p-2 bi-hand-thumbs-up-fill "></i><span class="">{{post.likes}}</span>
+        </div>
+        <div class="col d-flex justify-content-center border-start align-items-center">
+          <i style="font-size:28px;color:#8f13e8;" class="bi bi-chat-left-dots-fill p-2"></i><span class="">{{post.comments}}</span>
+        </div>
+      </div>
+      <div class="comments">
+        <li>like it </li>
+        <li>chamegei </li>
+        <li>nice one it </li>
+        <li>kararan </li>
+        <li>like it </li>
+      </div>
+    </div>
+
+
+
     </div>
     <!--    posts end here-->
     <div class="col d-none d-md-block d-lg-block col-md-3 col-lg-3">
@@ -216,6 +206,10 @@ li:hover{
 }
 .feed{
   padding-bottom: 1rem;
+}
+.comments{
+  min-height: 1rem;
+  max-height: 6rem;
   border-bottom:1px solid black;
 }
 .create-post{
