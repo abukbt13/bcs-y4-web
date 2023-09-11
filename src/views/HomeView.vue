@@ -83,19 +83,13 @@ import Footer from "@/views/includes/Footer.vue";
              are done here also here is the place to share knowledge with experienced individual in this area
            </p>
            <div class="groups">
-           <router-link to="group" class="btn btn-primary m-2">Android Developers</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Web development</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Machine Learning</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Mysql Databases</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Java Developers</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Laravel </router-link>
-           <router-link to="group" class="btn btn-primary m-2">Laravel </router-link>
-           <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Laravel</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>
-           <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>
-           </div>
+           <router-link :to="{ path: '/show_group/posts', query: { name: 'android' } }" class="btn btn-primary m-2">Android Developers</router-link>
+           <router-link :to="{ path: '/show_group/posts', query: { name: 'Web_development' } }" class="btn btn-primary m-2">Web development</router-link>
+           <router-link :to="{ path: '/show_group/posts', query: { name: 'Machine_Learning' } }" class="btn btn-primary m-2">Machine Learning</router-link>
+           <router-link :to="{ path: '/show_group/posts', query: { name: 'Mysql_Databases' } }" class="btn btn-primary m-2">Mysql Databases</router-link>
+           <router-link :to="{ path: '/show_group/posts', query: { name: 'Java_Developers' } }" class="btn btn-primary m-2">Java Developers</router-link>
+           <router-link :to="{ path: '/show_group/posts', query: { name: 'Laravel' } }" class="btn btn-primary m-2">Laravel </router-link>
+          </div>
          </div>
        </div>
   </div>

@@ -15,8 +15,12 @@ const {base_url,authHeader}=auth()
 function fileUpload(e){
   file.value=e.target.files[0];
 }
-if(groupName.value !=''){
-  alert('')
+const posts = ref([])
+
+const showPosts = async () =>{
+  const res = await axios.get(base_url.value+'posts/show')
+  posts.value =res.data.posts
+  console.log(res)
 }
 
 const savePost = async () => {
@@ -32,6 +36,7 @@ const savePost = async () => {
 
 // Use onMounted to capture the query parameter after the component is mounted
 onMounted(() => {
+  showPosts()
   if (!router.currentRoute.value.query.name) {
     // Redirect to a specific route when the "name" query parameter is missing
     router.push('/show_group') // Replace with the actual route name
@@ -114,7 +119,7 @@ onMounted(() => {
               Create a post
             </button>
             </div>
-
+{{posts}}
 
       <!-- Modal -->
                   <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
