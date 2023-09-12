@@ -3,8 +3,8 @@
 import {auth} from "@/compossables/auth";
 import {onMounted, ref} from "vue";
 import axios from "axios";
+import Swal from "sweetalert2";
 const {base_url,storage,authHeader}=auth()
-// import Swal from "sweetalert2";
 
 const new_profile = ref('')
 const first_name = ref('')
@@ -34,7 +34,11 @@ const updateProfile =async () => {
   formData.append('new_profile', new_profile.value)
 
   const res = await axios.post(base_url.value+'profile/update',formData,authHeader)
-
+  await  Swal.fire(
+      'Success!',
+      'Profile updated successfully',
+      'success'
+  )
 }
 
 onMounted(()=>{

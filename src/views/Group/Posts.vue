@@ -169,13 +169,13 @@ onMounted(() => {
           <i style="font-size:28px;color:#8f13e8;" class="bi bi-chat-left-dots-fill p-2"></i><span class="">{{post.comments}}</span>
         </div>
       </div>
-      <div class="comments">
-        <li>like it </li>
-        <li>chamegei </li>
-        <li>nice one it </li>
-        <li>kararan </li>
-        <li>like it </li>
-      </div>
+<!--      <div class="comments">-->
+<!--        <li>like it </li>-->
+<!--        <li>chamegei </li>-->
+<!--        <li>nice one it </li>-->
+<!--        <li>kararan </li>-->
+<!--        <li>like it </li>-->
+<!--      </div>-->
     </div>
 
 
