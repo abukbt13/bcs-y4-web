@@ -11,17 +11,23 @@ const  file = ref('')
 const router = useRouter();
 import {auth} from "@/compossables/auth";
 import Header from "@/views/includes/Header.vue";
-const {base_url,authHeader}=auth()
 
+
+
+const {base_url,authHeader}=auth()
+import {group} from "@/compossables/group";
+const {create_group,group_name,group_description,group_category,showGroup,groups}=group()
 function fileUpload(e){
   file.value=e.target.files[0];
 }
 const posts = ref([])
 
+
+
 const showPosts = async () =>{
   const res = await axios.get(base_url.value+'posts/show')
   posts.value =res.data.posts
-  console.log(res)
+
 }
 
 const savePost = async () => {
@@ -34,15 +40,52 @@ const savePost = async () => {
    await showPosts()
   }
 }
-function like (id){
-  const response =  axios.post(`${base_url.value}post/like/${id}`,authHeader);
-  // await showPosts()
-}
 
+async function like(id) {
+  try {
+    const response = await axios.post(
+        `${base_url.value}post/like/${id}`,
+        null, // Request data (if needed)
+        authHeader
+    );
+
+    // Handle the response here
+    showPosts();
+
+    // You can perform any additional actions based on the response if needed
+  } catch (error) {
+    // Handle errors here
+    console.error('Error making POST request:', error);
+  }
+}
+function showComment(post){
+  console.log(post)
+}
+const comment_post = ref(null)
+function toggleComment(postId) {
+  // Toggle the comment_post property to show/hide the textarea for the selected post
+  if (this.comment_post === postId) {
+    this.comment_post = null; // Hide the textarea if it's already shown
+  } else {
+    this.comment_post = postId; // Show the textarea for the selected post
+  }
+}
+const new_comment = ref ('')
+const saveComment=async (id)=>{
+  const formData = new FormData();
+  formData.append('comment', new_comment.value)
+  const response = await axios.post(`${base_url.value}post/comment/${id}`, formData,authHeader);
+  if (response.status === 200) {
+    new_comment.value=''
+    comment_post.value=''
+    await showPosts()
+  }
+}
 
 // Use onMounted to capture the query parameter after the component is mounted
 onMounted(() => {
   showPosts()
+  showGroup()
   if (!router.currentRoute.value.query.name) {
     // Redirect to a specific route when the "name" query parameter is missing
     router.push('/show_group') // Replace with the actual route name
@@ -105,14 +148,52 @@ onMounted(() => {
       <div class="ms-4 mt-4 me-2">
 
         <router-link to="/show_group" class="text-decoration-none my-4 py-3 text-uppercase">Explore Group</router-link>
-        <br>
-          <h3>My groups</h3>
-          <router-link :to="{ path: '/show_group/posts', query: { name: 'Development' } }" class="text-decoration-none my-4 py-3 text-uppercase">Development</router-link>
-        <br>
-        <router-link :to="{ path: '/show_group/posts', query: { name: 'AndroidDevelopment' } }" class="text-decoration-none my-4 py-3 text-uppercase">Android Development</router-link>
-        <br>
-        <router-link :to="{ path: '/show_group/posts', query: { name: 'JavaDevelopment' } }" class="text-decoration-none my-4 py-3 text-uppercase">Java Development</router-link>
-        <br>
+
+
+        <div class="d-flex bg-light justify-content-between align-items-center">
+          <p class="pt-3" style="font-size: 23px;">My Groups</p>
+          <button class="btn btn-primary btn-sm" data-bs-target="#create_group" data-bs-toggle="modal">
+            <i class="bi bi-plus"></i>
+            Create group</button>
+        </div>
+          <!-- Modal pop up start    for create group  -->
+        <div class="modal fade" id="create_group" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create a Post</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form @submit.prevent="create_group">
+                <div class="modal-body">
+                  <label for="">Group Name</label>
+                  <input type="text" v-model="group_name" class="form-control">
+                  <label for="">Group Category</label>
+                  <select v-model="group_category" class="form-control">
+                    <option value="" disabled selected>-- Select a category --</option>
+                    <option value="Robotics">Robotics</option>
+                    <option value="Android">Android</option>
+                    <option value="Databases">Databases</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <label for="">Group Description</label>
+                  <textarea name="" id="" v-model="group_description"   class="form-control"></textarea>
+                </div>
+                <div class="d-flex justify-content-between mx-4 my-2">
+                  <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" data-bs-dismiss="modal"  class="btn btn-primary">Create group</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- Modal pop up end      -->
+
+        <div class="" v-for="group in groups" :key="group">
+          <router-link :to="{ path: `/show_group/posts`, query: { name: group.group_id } }" class="text-decoration-none my-4 py-3 text-uppercase">
+            {{ group.group_name }}
+          </router-link>
+        </div>
       </div>
     </div>
     <!--    posts start here-->
@@ -154,7 +235,7 @@ onMounted(() => {
                   </div>
       <!--      CREATE POST-->
 
-    <div class="single-post" v-for="post in posts" :key="post">
+    <div @mouseenter="showComment(post.id)" class="single-post" v-for="post in posts" :key="post">
       <div class="d-flex align-items-center">
         <img :src="'http://127.0.0.1:8000/profiles/'+post.profile" class="rounded" width="50" height="50" alt="No image"> <p class="ms-2 mt-3">Alan Kibet</p></div>
       <p>
@@ -166,16 +247,22 @@ onMounted(() => {
           <i style="font-size:28px;color:#8f13e8;" @click="like(post.id)" class="bi p-2 bi-hand-thumbs-up-fill "></i><span class="">{{post.likes}}</span>
         </div>
         <div class="col d-flex justify-content-center border-start align-items-center">
-          <i style="font-size:28px;color:#8f13e8;" class="bi bi-chat-left-dots-fill p-2"></i><span class="">{{post.comments}}</span>
+          <i data-bs-toggle="modal" @click="toggleComment(post.id)"  style="font-size:28px;color:#8f13e8;" class="bi bi-chat-left-dots-fill p-2"></i><span class="">{{post.comments}}</span>
         </div>
       </div>
-<!--      <div class="comments">-->
-<!--        <li>like it </li>-->
-<!--        <li>chamegei </li>-->
-<!--        <li>nice one it </li>-->
-<!--        <li>kararan </li>-->
-<!--        <li>like it </li>-->
-<!--      </div>-->
+      <form @submit.prevent="saveComment(post)">
+      <div class="d-flex justify-content-center align-items-center" >
+
+        <textarea   v-show="comment_post ==post.id" class="form-control" v-model="new_comment" rows="2"></textarea>
+        <button type="submit" style="border: none; background-color: white;">
+          <i  style="font-size: 40px;color: blue;rotate: y 45deg;rotate: x 7deg" v-show="comment_post ==post.id" class="p-2 bi bi-cursor-fill"></i>
+        </button>
+
+      </div>
+      </form>
+      <div>
+<!--          <p>jjjj</p>-->
+      </div>
     </div>
 
 
@@ -208,9 +295,10 @@ li:hover{
   padding-bottom: 1rem;
 }
 .comments{
-  min-height: 1rem;
-  max-height: 6rem;
+  min-height: 0rem;
+  max-height: 17rem;
   border-bottom:1px solid black;
+  overflow: hidden;
 }
 .create-post{
   height: 4rem;

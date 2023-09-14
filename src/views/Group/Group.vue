@@ -1,31 +1,24 @@
+
+<script setup>
+import Header from "@/views/includes/Header.vue";
+import Footer from "@/views/includes/Footer.vue";
+import {group} from "@/compossables/group";
+import {onMounted} from "vue";
+const {create_group,group_name,group_description,group_category,showGroup,groups} = group()
+onMounted(() => {
+  showGroup()
+})
+</script>
+
 <template>
 <Header />
 
-  <div class="groups">
+      <router-link v-for="group in groups" :key="group" :to="{ path: `/show_group/posts`, query: { name: group.group_id } }" class="text-decoration-none btn btn-primary m-1 text-uppercase">
+        {{ group.group_name }}
+      </router-link>
 
-      <router-link :to="{ path: '/show_group/posts', query: { name: 'android' } }" class="btn btn-primary m-2">Android Developers</router-link>
-
-<!--    <router-link to="group" class="btn btn-primary m-2">Mysql Databases</router-link>-->
-<!--    <router-link to="group" class="btn btn-primary m-2">Java Developers</router-link>-->
-<!--    <router-link to="group" class="btn btn-primary m-2">Laravel </router-link>-->
-<!--    <router-link to="group" class="btn btn-primary m-2">Laravel </router-link>-->
-<!--    <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>-->
-<!--    <router-link to="group" class="btn btn-primary m-2">Laravel</router-link>-->
-<!--    <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>-->
-<!--    <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>-->
-<!--    <router-link to="group" class="btn btn-primary m-2">Laravel Developers</router-link>-->
-  </div>
   <Footer />
 </template>
-
-<script>
-import Header from "@/views/includes/Header.vue";
-import Footer from "@/views/includes/Footer.vue";
-export default {
-  name: "Group",
-  components: {Footer, Header}
-}
-</script>
 
 <style scoped>
 
