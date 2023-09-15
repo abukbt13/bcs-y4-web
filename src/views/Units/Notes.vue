@@ -4,17 +4,17 @@
 
       <h3 class="text-white">Database Design</h3>
       <div class="ul">
-        <li class="list-unstyled text-uppercase text-white active ps-4">
+        <li class="list-unstyled text-uppercase text-white  ps-4">
           <router-link to="/unit" class="text-decoration-none "><i style="color:#398BF6;" class="bi p-2 bi-house"></i> Home</router-link>
         </li>
-        <li class="list-unstyled text-uppercase text-white ps-4">
+        <li class="list-unstyled text-uppercase text-white active ps-4">
           <router-link to="/unit/notes" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-pencil"></i> Notes</router-link>
         </li>
         <li class="list-unstyled text-uppercase text-white ps-4">
           <router-link to="/unit/assignments" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-list-stars"></i>Assignments</router-link>
         </li>
         <li class="list-unstyled text-uppercase text-white ps-4">
-          <router-link to="/unit/study_videos" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-file-play-fill"></i>Relevant Videos </router-link>
+          <router-link to="/unit/relevant_videos" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-file-play-fill"></i>Relevant Videos </router-link>
 
         </li>
         <li class="list-unstyled text-uppercase text-white ps-4 ps-4">
@@ -24,20 +24,7 @@
       </div>
     </div>
     <div class="col col-md-8 col-lg-8">
-      <H2>EVENTS IN THIS UNIT</H2>
-      <div class="card">
-      <div class="card-header">
-        Database Design And Analysis
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">CAT 1 EXAN</h5>
-        <p class="card-text">
-          Date:7/9/2023
-        </p>
-        <router-link to="all-events" class="btn btn-primary">View All Events</router-link>
-      </div>
-    </div>
-      <h2></h2>
+      <H2>Notes</H2>
     </div>
   </div>
 </template>

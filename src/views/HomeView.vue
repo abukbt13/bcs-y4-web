@@ -1,6 +1,12 @@
 <script setup>
 import Header from "@/views/includes/Header.vue";
 import Footer from "@/views/includes/Footer.vue";
+import {group} from "@/compossables/group";
+import {onMounted} from "vue";
+const {create_group,group_name,group_description,group_category,showGroup,groups} = group()
+onMounted(() => {
+  showGroup()
+})
 </script>
 
 <template>
@@ -38,42 +44,14 @@ import Footer from "@/views/includes/Footer.vue";
 
          <ul class="nav nav-tabs mt-4">
            <li class="nav-item">
-             <a class="nav-link active" aria-current="page" href="#">First Semester</a>
+             <router-link class="nav-link active" aria-current="page" to="/">First Semester</router-link>
            </li>
            <li class="nav-item">
-             <a class="nav-link border" href="#">Second Semester</a>
+             <router-link class="nav-link border" to="/second_sem">Second Semester</router-link>
            </li>
 
           </ul>
-
-         <div class="courses">
-
-           <div class="course">
-             <router-link class="course text-decoration-none p-3" to="unit">
-               Database Design
-             </router-link>
-           </div>
-           <div class="course">
-             <router-link class="course text-decoration-none p-3" to="unit">
-               Software Engineering
-             </router-link>
-           </div>
-           <div class="course">
-             <router-link class="course text-decoration-none p-3" to="unit">
-               Ict Project Management
-             </router-link>
-           </div>
-           <div class="course">
-             <router-link class="course text-decoration-none p-3" to="unit">
-               Design and analysis of Algorithm
-             </router-link>
-           </div>
-           <div class="course">
-             <router-link class="course text-decoration-none p-3" to="unit">
-               Artificial Intelligence
-             </router-link>
-           </div>
-         </div>
+          <router-view></router-view>
 
          <div class=" mt-5">
            <h2 class="text-center">Forums</h2>
@@ -83,13 +61,10 @@ import Footer from "@/views/includes/Footer.vue";
              are done here also here is the place to share knowledge with experienced individual in this area
            </p>
            <div class="groups">
-           <router-link :to="{ path: '/show_group/posts', query: { name: 'android' } }" class="btn btn-primary m-2">Android Developers</router-link>
-           <router-link :to="{ path: '/show_group/posts', query: { name: 'Web_development' } }" class="btn btn-primary m-2">Web development</router-link>
-           <router-link :to="{ path: '/show_group/posts', query: { name: 'Machine_Learning' } }" class="btn btn-primary m-2">Machine Learning</router-link>
-           <router-link :to="{ path: '/show_group/posts', query: { name: 'Mysql_Databases' } }" class="btn btn-primary m-2">Mysql Databases</router-link>
-           <router-link :to="{ path: '/show_group/posts', query: { name: 'Java_Developers' } }" class="btn btn-primary m-2">Java Developers</router-link>
-           <router-link :to="{ path: '/show_group/posts', query: { name: 'Laravel' } }" class="btn btn-primary m-2">Laravel </router-link>
-          </div>
+             <router-link v-for="group in groups" :key="group" :to="{ path: `/show_group/posts`, query: { name: group.group_id } }" class="text-decoration-none btn btn-primary m-1 text-uppercase">
+               {{ group.group_name }}
+             </router-link>
+           </div>
          </div>
        </div>
   </div>
@@ -105,20 +80,9 @@ import Footer from "@/views/includes/Footer.vue";
   height: 50vh;
   padding-bottom: 1rem;
 }
-.courses {
 
-  color: white;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: center; /* Horizontally center items */
-  align-items: center; /* Vertically center items */
-}
 
-.course{
-  margin-top: 2rem;
-  background: #8f13e8;
-  color: white;
-}
+
 
 
 </style>

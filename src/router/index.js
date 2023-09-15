@@ -16,17 +16,56 @@ import Mydiscussion from "@/views/Dashboard/Mydiscussion.vue";
 import Login from "@/views/auth/Login.vue"
 import Register from "@/views/auth/Register.vue"
 import Group from "@/views/Group/Group.vue";
+import FirstSem from "@/views/includes/FirstSem.vue";
+import SecondSem from "@/views/includes/SecondSem.vue";
+import Unit from "@/views/Units/Unit.vue";
+import Notes from "@/views/Units/Notes.vue";
+import Assignments from "@/views/Units/Assignments.vue";
+import Relevant_Videos from "@/views/Units/Relevant_Videos.vue";
+import Relevant_Links from "@/views/Units/Relevant_Links.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      component: HomeView,
+      children:[
+        {
+          path: '/',
+          component: FirstSem
+        },
+        {
+          path: '/second_sem',
+          component: SecondSem
+        }
+      ]
+
     },
     {
       path: '/unit',
-      component: Unitindex
+      component: Unit,
+      children:[
+        {
+          path: '/unit',
+          component: Unitindex,
+        },
+        {
+          path: '/unit/notes',
+          component: Notes
+        },
+        {
+          path: '/unit/assignments',
+          component: Assignments
+        },
+        {
+          path: '/unit/relevant_videos',
+          component: Relevant_Videos
+        },
+        {
+          path: '/unit/relevant_links',
+          component: Relevant_Links
+        }
+      ]
     },
     {
       path: '/login',
