@@ -23,6 +23,12 @@ const logout =async ()=>{
         <ul class="navbar-nav">
 
           <li class="nav-item">
+            <router-link  class="nav-link text-primary" to="/all_units">Notes</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link  class="nav-link text-primary" to="/show_group">Forums</router-link>
+          </li>
+          <li class="nav-item">
             <router-link  class="nav-link text-primary" to="/dashboard">Dashboard</router-link>
           </li>
           <li class="nav-item" v-if="token"  @click="logout()">

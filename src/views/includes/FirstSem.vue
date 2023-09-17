@@ -1,11 +1,12 @@
 <template>
   <div class="courses">
-                 <router-link class="course text-decoration-none p-3" to="unit">
-                   Database Design
-                 </router-link>
-                 <router-link class="course text-decoration-none p-3" to="unit">
-                   Software Engineering
-                 </router-link>
+    <router-link :to="{ path: `/unit`, query: { name: 123344 } }" class="text-decoration-none btn btn-primary m-1 text-uppercase">
+      Data design
+    </router-link>
+
+    <router-link :to="{ path: `/unit`, query: { name: 'software-engineering' } }" class="text-decoration-none btn btn-primary m-1 text-uppercase">
+      Software Engineering
+    </router-link>
   </div>
 </template>
 

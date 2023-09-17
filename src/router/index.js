@@ -23,6 +23,7 @@ import Notes from "@/views/Units/Notes.vue";
 import Assignments from "@/views/Units/Assignments.vue";
 import Relevant_Videos from "@/views/Units/Relevant_Videos.vue";
 import Relevant_Links from "@/views/Units/Relevant_Links.vue";
+import AllUnits from "@/views/Units/AllUnits.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -40,6 +41,10 @@ const router = createRouter({
         }
       ]
 
+    },
+    {
+      path: '/all_units',
+      component: AllUnits,
     },
     {
       path: '/unit',
