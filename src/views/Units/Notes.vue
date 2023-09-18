@@ -1,10 +1,59 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
+import axios from "axios";
+import {auth} from "@/compossables/auth";
+import Swal from "sweetalert2";
 const router = useRouter();
 const unit_id = ref('');
-onMounted(() => {
+const file = ref('');
+const title = ref('');
+const notes_description = ref('');
 
+const {base_url,authHeader}=auth()
+
+
+function fileUpload(e){
+  file.value=e.target.files[0];
+}
+const notes = ref([])
+
+
+
+const showNotes = async () =>{
+  const res = await axios.get(base_url.value+'notes/show')
+  notes.value =res.data.notes
+}
+
+const addNotes = async () => {
+  const formData = new FormData()
+  formData.append('notes_description', notes_description.value)
+  formData.append('title', title.value)
+  formData.append('file', file.value)
+  formData.append('unit_id', unit_id.value)
+  const response = await axios.post(base_url.value+'notes/upload', formData,authHeader);
+  if (response.status === 200) {
+    await  Swal.fire(
+        'Success!',
+        'Profile updated successfully',
+        'success'
+    )
+    await showNotes()
+  }
+}
+
+function showExtension(name) {
+  const filenameParts = name.split('.');
+  const extension = filenameParts[filenameParts.length - 1];
+  return extension;
+}
+const valid_extensions =[
+  'pdf','png','jpeg','jpg'
+]
+
+
+onMounted(() => {
+  showNotes()
   if (!router.currentRoute.value.query.name) {
     // Redirect to a specific route when the "name" query parameter is missing
     router.push('/all_units') // Replace with the actual route name
@@ -56,7 +105,7 @@ onMounted(() => {
               <form @submit.prevent="addNotes">
                 <div class="modal-body">
                   <label for="">Title</label>
-                  <input type="text" v-model="group_name" class="form-control">
+                  <input type="text" v-model="title" class="form-control">
 
                   <label for="">Notes Description</label>
                   <textarea name="" id="" v-model="notes_description"   class="form-control"></textarea>
@@ -77,6 +126,21 @@ onMounted(() => {
         <!-- Modal pop up end      -->
 
         <p>Database overview</p>
+<!--        {{notes}}-->
+        <div style="border: solid 1px grey;" class="" v-for="note in notes" :key="note">
+
+           <h2>{{note.title}}</h2>
+
+              <p>{{note.notes_description}}</p>
+          <p v-if="valid_extensions.includes(showExtension(note.file))">
+            <router-link :to="{ path: `notes/read`, query: { name:note.file  } }"  class="text-decoration-none">Read Now</router-link>
+          </p>
+<!--          <p v-else>-->
+<!--            <a :href="`http://127.0.0.1:8000/notes/${note.file}`" class="text-decoration-none">Download {{ note.file }}</a>-->
+<!--          </p>-->
+
+        </div>
+
       </div>
     </div>
   </div>

@@ -24,6 +24,7 @@ import Assignments from "@/views/Units/Assignments.vue";
 import Relevant_Videos from "@/views/Units/Relevant_Videos.vue";
 import Relevant_Links from "@/views/Units/Relevant_Links.vue";
 import AllUnits from "@/views/Units/AllUnits.vue";
+import NotesRead from "@/views/Units/NotesRead.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -57,6 +58,10 @@ const router = createRouter({
         {
           path: '/unit/notes',
           component: Notes
+        },
+        {
+          path: '/unit/notes/read',
+          component: NotesRead
         },
         {
           path: '/unit/assignments',
