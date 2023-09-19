@@ -35,7 +35,7 @@ const addNotes = async () => {
   if (response.status === 200) {
     await  Swal.fire(
         'Success!',
-        'Profile updated successfully',
+        'Notes added successfully',
         'success'
     )
     await showNotes()
@@ -99,7 +99,7 @@ onMounted(() => {
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Create a Post</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Upload notes</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <form @submit.prevent="addNotes">
@@ -116,7 +116,7 @@ onMounted(() => {
                 </div>
                 <div class="d-flex justify-content-between mx-4 my-2">
                   <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" data-bs-dismiss="modal"  class="btn btn-primary">Create group</button>
+                  <button type="submit" data-bs-dismiss="modal"  class="btn btn-primary">Add notes</button>
                 </div>
 
               </form>
