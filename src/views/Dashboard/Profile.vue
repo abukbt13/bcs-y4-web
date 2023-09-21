@@ -4,7 +4,7 @@ import {auth} from "@/compossables/auth";
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
-const {base_url,storage,authHeader}=auth()
+const {base_url,storage,storage_profile,authHeader}=auth()
 
 const new_profile = ref('')
 const first_name = ref('')
@@ -13,7 +13,7 @@ const phone = ref('')
 const email = ref('')
 const profile = ref('')
 const getProfile = async () =>{
-  const res= await axios.get('http://127.0.0.1:8000/api/user', authHeader);
+  const res= await axios.get(base_url.value+'user', authHeader);
   first_name.value=res.data.first_name
   last_name.value=res.data.last_name
   phone.value=res.data.phone
@@ -48,7 +48,7 @@ onMounted(()=>{
 <template>
   <div className="container d-flex bg-light align-items-center">
     <div className="">
-      <img style="border-radius: 50%;"  :src="'http://127.0.0.1:8000/profiles/'+profile" width="200" height="200" alt="">
+      <img style="border-radius: 50%;" :src="storage_profile+profile" width="200" height="200" alt="">
     </div>
     <ul className="nav nav-tabs ms-4">
       <li className="nav-item">
@@ -108,7 +108,7 @@ onMounted(()=>{
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Profile Picture</label>
             </div>
-            <img :src="'http://127.0.0.1:8000/profiles/'+profile" width="200" height="200" alt=""><br>
+            <img :src="storage_profile+profile" width="200" height="200" alt=""><br>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Upload New profile picture</label>
               <input type="file" class="form-control"  @change="fileUpload">

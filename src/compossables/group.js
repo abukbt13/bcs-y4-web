@@ -20,7 +20,7 @@ export function group(){
     }
 
     const showGroup = async () =>{
-        const res = await axios.get(base_url.value+'group/show',authHeader)
+        const res = await axios.get(base_url.value+'group/show')
         groups.value =res.data.group
     }
     return {
