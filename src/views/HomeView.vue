@@ -57,6 +57,7 @@ onMounted(() => {
            <h2 class="text-center">Forums</h2>
            <p class="text-center">Forums help us to expand more in an area of specification here more of the studies
              </p>
+
            <p class="text-center">
              are done here also here is the place to share knowledge with experienced individual in this area
            </p>
