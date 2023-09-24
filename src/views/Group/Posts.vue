@@ -14,7 +14,7 @@ import Header from "@/views/includes/Header.vue";
 
 
 
-const {base_url,authHeader}=auth()
+const {base_url,storage_posts,storage_profile,authHeader}=auth()
 import {group} from "@/compossables/group";
 const {create_group,group_name,group_description,group_category,showGroup,groups}=group()
 function fileUpload(e){
@@ -283,11 +283,11 @@ onMounted(() => {
 
     <div @mouseenter="showComment(post.id)" class="single-post" v-for="post in posts" :key="post">
       <div class="d-flex align-items-center">
-        <img :src="'http://127.0.0.1:8000/profiles/'+post.profile" class="rounded" width="50" height="50" alt="No image"> <p class="ms-2 mt-3">Alan Kibet</p></div>
+        <img :src="storage_profile+post.profile" class="rounded" width="50" height="50" alt="No image"> <p class="ms-2 mt-3">Alan Kibet</p></div>
       <p>
         {{ post.description}}
       </p>
-      <img :src="'http://127.0.0.1:8000/posts/'+post.file" class="img-fluid" alt=""><br>
+      <img :src="storage_posts+post.file" class="img-fluid" alt=""><br>
       <div  class="feed row ">
         <div class="col d-flex justify-content-center align-items-center">
           <i style="font-size:28px;color:#8f13e8;" @click="like(post.id)" class="bi p-2 bi-hand-thumbs-up-fill "></i><span class="">{{post.likes}}</span>

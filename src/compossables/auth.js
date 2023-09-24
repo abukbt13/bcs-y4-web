@@ -8,11 +8,13 @@ export function auth(){
     const storage = ref('https://bcsy4.kwetunyumbani.online/backend/public/')
     const storage_profile = ref('https://bcsy4.kwetunyumbani.online/backend/public/profiles/')
     const storage_notes = ref('https://bcsy4.kwetunyumbani.online/backend/public/notes/')
+    const storage_posts = ref('https://bcsy4.kwetunyumbani.online/backend/public/posts/')
 
     // const base_url = ref('http://127.0.0.1:8000/api/')
     // const storage = ref('http://127.0.0.1:8000/')
     // const storage_profile = ref('http://127.0.0.1:8000/profiles/')
     // const storage_notes = ref('http://127.0.0.1:8000/notes/')
+    // const storage_posts = ref('http://127.0.0.1:8000/posts/')
 
     const   authUser = async () => {
         try {
@@ -26,7 +28,7 @@ export function auth(){
 
     return {
 
-        authHeader,authUser,base_url,storage,storage_profile,storage_notes
+        authHeader,authUser,base_url,storage,storage_profile,storage_notes,storage_posts
     }
 
 }
