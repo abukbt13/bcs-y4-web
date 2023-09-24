@@ -61,7 +61,6 @@ onMounted(() => {
            <p class="text-center">
              are done here also here is the place to share knowledge with experienced individual in this area
            </p>
-           {{groups}}
            <div class="groups" >
 
              <router-link v-for="group in groups" :key="group"  :to="{ path: `/show_group/posts`, query: { name: group.group_id } }" class="text-decoration-none btn btn-primary m-1 text-uppercase">
