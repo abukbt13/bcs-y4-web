@@ -48,8 +48,9 @@ onMounted(()=>{
 <template>
   <div className="container d-flex bg-light align-items-center">
     <div className="">
-      <img style="border-radius: 50%;" :src="storage_profile+profile" width="200" height="200" alt="">
+      <img  :src="storage_profile+profile" alt="Error loading the image">
     </div>
+
     <ul className="nav nav-tabs ms-4">
       <li className="nav-item">
         <router-link className="nav-link active" aria-current="page" to="/dashboard/">Profile</router-link>
@@ -130,5 +131,20 @@ onMounted(()=>{
 
 
 <style scoped>
-
+ li:hover{
+  background: grey;
+  color: pink;
+}
+img{
+ border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
+@media screen and (max-width: 470px) {
+  img{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+}
 </style>

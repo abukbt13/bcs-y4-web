@@ -13,7 +13,7 @@ const {base_url,authHeader} = auth()
 
 const   authUser = async () => {
   try {
-    const res= await axios.get('http://127.0.0.1:8000/api/auth/user', authHeader);
+    const res= await axios.get(base_url.value+'auth/user', authHeader);
     if(res){
       localStorage.setItem('status', 'logged_in');
       await router.push('/dashboard');

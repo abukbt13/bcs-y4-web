@@ -6,6 +6,7 @@ import {useRouter} from "vue-router";
 const router = useRouter()
 
 import {auth} from "@/compossables/auth";
+import Header from "@/views/includes/Header.vue";
 const {base_url} = auth()
 
 const email = ref('')
@@ -46,6 +47,7 @@ const createAccount =async () => {
 </script>
 
 <template>
+  <Header />
   <section class="vh-100">
     <div class="row px-3 d-flex justify-content-center align-items-center h-100">
 

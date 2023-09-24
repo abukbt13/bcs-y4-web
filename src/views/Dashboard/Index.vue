@@ -5,6 +5,7 @@ import {onMounted} from "vue";
 import {auth} from "@/compossables/auth";
 const {authUser} =auth()
 import Header from "@/views/includes/Header.vue";
+import Footer from "@/views/includes/Footer.vue";
 const status=localStorage.getItem('status')
 const logOut =()=>{
   localStorage.removeItem('token')
@@ -30,6 +31,7 @@ onMounted(()=>{
      </div>
   </div>
   <router-view></router-view>
+  <Footer />
 </template>
 
 
