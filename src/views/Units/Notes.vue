@@ -10,7 +10,7 @@ const file = ref('');
 const title = ref('');
 const notes_description = ref('');
 
-const {base_url,authHeader}=auth()
+const {base_url,storage_notes,authHeader}=auth()
 
 
 function fileUpload(e){
@@ -136,7 +136,7 @@ onMounted(() => {
             <router-link :to="{ path: `notes/read`, query: { name:note.file  } }"  class="text-decoration-none">Read Now</router-link>
           </p>
           <p v-else>
-            <a :href="`http://127.0.0.1:8000/notes/${note.file}`" class="text-decoration-none">Download {{ note.title }}</a>
+            <a :href="storage_notes+note.file" class="text-decoration-none">Download {{ note.title }}</a>
           </p>
 
         </div>
