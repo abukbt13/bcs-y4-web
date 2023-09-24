@@ -5,6 +5,7 @@ const {base_url , authHeader}=auth()
 
 export function group(){
 
+    const create_error = ref('')
     const groups = ref([])
     const group_name = ref('')
     const group_description = ref('')
@@ -17,6 +18,13 @@ export function group(){
         formData.append('group_description',group_description.value)
         formData.append('group_category',group_category.value)
         const response = await axios.post(base_url.value+'group/create', formData,authHeader);
+        if(response.data.status==='failed'){
+            alert()
+            alert("A group exist with that name")
+        }
+        else {
+            alert('error')
+        }
     }
 
     const showGroup = async () =>{
@@ -24,6 +32,6 @@ export function group(){
         groups.value =res.data.group
     }
     return {
-        create_group,group_name,group_category,group_description,showGroup,groups
+        create_group,group_name,group_category,group_description,create_error,showGroup,groups
     }
 }

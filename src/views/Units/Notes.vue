@@ -135,9 +135,9 @@ onMounted(() => {
           <p v-if="valid_extensions.includes(showExtension(note.file))">
             <router-link :to="{ path: `notes/read`, query: { name:note.file  } }"  class="text-decoration-none">Read Now</router-link>
           </p>
-<!--          <p v-else>-->
-<!--            <a :href="`http://127.0.0.1:8000/notes/${note.file}`" class="text-decoration-none">Download {{ note.file }}</a>-->
-<!--          </p>-->
+          <p v-else>
+            <a :href="`http://127.0.0.1:8000/notes/${note.file}`" class="text-decoration-none">Download {{ note.title }}</a>
+          </p>
 
         </div>
 
