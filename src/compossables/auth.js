@@ -4,7 +4,7 @@ import axios from "axios";
 export function auth(){
     const authHeader = { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } };
     const profile= ref([])
-    const base_url = ref('https://bcsy4.kwetunyumbani.online/api/')
+    const base_url = ref('https://bcsy4.kwetunyumbani.online/backend/api/')
     const storage = ref('https://bcsy4.kwetunyumbani.online/backend/public/')
     const storage_profile = ref('https://bcsy4.kwetunyumbani.online/backend/public/profiles/')
     const storage_notes = ref('https://bcsy4.kwetunyumbani.online/backend/public/notes/')
