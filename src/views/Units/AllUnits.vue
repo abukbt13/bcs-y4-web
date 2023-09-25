@@ -12,6 +12,8 @@ const {base_url,authHeader}=auth()
 
 const unit_description = ref('')
 const unit_name = ref('')
+const unit_code = ref('')
+const unit_error = ref()
 
 const units = ref([])
 
@@ -21,10 +23,17 @@ const showUnits = async () =>{
 }
 const addUnit = async () => {
   const formData = new FormData()
+
   formData.append('unit_description', unit_description.value)
   formData.append('unit_name', unit_name.value)
+  formData.append('unit_code', unit_code.value)
   const response = await axios.post(base_url.value+'unit/add', formData,authHeader);
-  if (response.status === 200) {
+  if(response.data.status==='failed'){
+
+    unit_error.value=response.data.message
+    console.log(unit_error)
+  }
+  else {
     await  Swal.fire(
         'Success!',
         'Unit added successfully',
@@ -32,7 +41,9 @@ const addUnit = async () => {
     )
     await showUnits()
   }
+
 }
+
 onMounted(() => {
   showUnits()
 }
@@ -42,7 +53,7 @@ onMounted(() => {
     <Header />
     <div class="d-flex px-3 bg-info justify-content-between">
       <h2>Units</h2>
-      <button data-bs-target="#add_unit" data-bs-toggle="modal" class="btn btn-primary float-end"><i style="color:#398BF6;" class="bi p-2 bi-plus"></i>Add Notes</button>
+      <button data-bs-target="#add_unit" data-bs-toggle="modal" class="btn btn-primary float-end"><i style="color:#398BF6;" class="bi p-2 bi-plus"></i>Add Unit</button>
     </div>
 
     <!-- Modal pop up start    for adding Unit   -->
@@ -55,11 +66,15 @@ onMounted(() => {
           </div>
           <form @submit.prevent="addUnit">
             <div class="modal-body">
+
               <label for="">Unit Name</label>
               <input type="text" v-model="unit_name" class="form-control">
 
+              <label for="">Unit code</label>
+              <input type="text" v-model.value.trim="unit_code" class="form-control">
+
               <label for="">Unit Description</label>
-              <textarea name="" id="" v-model="unit_description"   class="form-control"></textarea>
+              <textarea name=""  v-model="unit_description"   class="form-control"></textarea>
 
             </div>
             <div class="d-flex justify-content-between mx-4 my-2">
@@ -75,7 +90,10 @@ onMounted(() => {
 
     <div  class="px-5 py-2">
 
-      <router-link  v-for="unit in units" :key="unit" :to="{ path: `/unit`, query: { name: unit.unit_name } }" class="text-decoration-none btn btn-primary m-1 text-uppercase">
+      <div class="error bg-danger text-uppercase">
+        {{unit_error}}
+      </div>
+      <router-link  v-for="unit in units" :key="unit" :to="{ path: `/unit`, query: { name: unit.unit_code } }" class="text-decoration-none btn btn-primary m-1 text-uppercase">
         {{  unit.unit_name }}
       </router-link>
 

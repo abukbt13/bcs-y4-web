@@ -2,9 +2,21 @@
 import Header from "@/views/includes/Header.vue";
 import Footer from "@/views/includes/Footer.vue";
 import {group} from "@/compossables/group";
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
+import {auth} from "@/compossables/auth";
+import axios from "axios";
+const {base_url,authHeader}=auth()
+
+
+const units = ref([])
+
+const showUnits = async () =>{
+  const res = await axios.get(base_url.value+'unit/show')
+  units.value =res.data.units
+}
 const {create_group,group_name,group_description,group_category,showGroup,groups} = group()
 onMounted(() => {
+  showUnits()
   showGroup()
 })
 </script>
@@ -40,18 +52,14 @@ onMounted(() => {
   <div class="section ms-5 mt-4 pt-4">
     <hr>
        <div class="pb-4 bg-light">
-         <h3 class="text-center">This semester courses</h3>
+         <h3 class="text-center">This semester units </h3>
 
-         <ul class="nav nav-tabs mt-4">
-           <li class="nav-item">
-             <router-link class="nav-link active" aria-current="page" to="/">First Semester</router-link>
-           </li>
-           <li class="nav-item">
-             <router-link class="nav-link border" to="/second_sem">Second Semester</router-link>
-           </li>
+         <div class="align-items-center mx-5">
+           <router-link  v-for="unit in units" :key="unit" :to="{ path: `/unit`, query: { name: unit.unit_code } }" class="text-decoration-none btn btn-primary m-1 text-uppercase">
+             {{  unit.unit_name }}
+           </router-link>
 
-          </ul>
-          <router-view></router-view>
+         </div>
 
          <div class=" mt-5">
            <h2 class="text-center">Forums</h2>

@@ -1,17 +1,24 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import axios from "axios";
 import {auth} from "@/compossables/auth";
 import Swal from "sweetalert2";
 const router = useRouter();
-const unit_id = ref('');
+const route = useRoute();
 const file = ref('');
 const title = ref('');
 const notes_description = ref('');
+const unit_details = ref([]);
+
 
 const {base_url,storage_notes,authHeader}=auth()
+const unit_id = ref('');
+unit_id.value = route.query.name;
 
+if(unit_id.value ===''){
+  router.push('/all_units')
+}
 
 function fileUpload(e){
   file.value=e.target.files[0];
@@ -21,7 +28,7 @@ const notes = ref([])
 
 
 const showNotes = async () =>{
-  const res = await axios.get(base_url.value+'notes/show')
+  const res = await axios.get(`${base_url.value}notes/show/${unit_id.value}`);
   notes.value =res.data.notes
 }
 
@@ -30,7 +37,7 @@ const addNotes = async () => {
   formData.append('notes_description', notes_description.value)
   formData.append('title', title.value)
   formData.append('file', file.value)
-  formData.append('unit_id', unit_id.value)
+  formData.append('unit_code', unit_id.value)
   const response = await axios.post(base_url.value+'notes/upload', formData,authHeader);
   if (response.status === 200) {
     await  Swal.fire(
@@ -51,39 +58,38 @@ const valid_extensions =[
   'pdf','png','jpeg','jpg'
 ]
 
+const showDetails = async () => {
+  const res = await axios.get(`${base_url.value}unit/details/${unit_id.value}`);
+  unit_details.value = res.data.details[0];
+};
 
 onMounted(() => {
   showNotes()
-  if (!router.currentRoute.value.query.name) {
-    // Redirect to a specific route when the "name" query parameter is missing
-    router.push('/all_units') // Replace with the actual route name
-  } else {
-    // Set groupName to the "name" query parameter value
-    unit_id.value = router.currentRoute.value.query.name
-  }})
+  showDetails()
+})
 </script>
 
 <template>
   <div class="row">
     <div class="col sidebar d-none d-md-block col-md-3 col-lg-3 ps-5 bg-dark">
-
-      <h3 class="text-white">Database Design</h3>
+    <router-link to="/all_units" class="btn btn-success">View All Units</router-link>
+      <h3 class="text-white">{{ unit_details.unit_name }}</h3>
       <div class="ul">
         <li class="list-unstyled text-uppercase text-white  ps-4">
-          <router-link :to="{ path: `/unit`, query: { name: 'databases' } }" class="text-decoration-none "><i style="color:#398BF6;" class="bi p-2 bi-house"></i> Home</router-link>
+          <router-link :to="{ path: `/unit`, query: { name: unit_id } }" class="text-decoration-none "><i style="color:#398BF6;" class="bi p-2 bi-house"></i> Home</router-link>
         </li>
         <li class="list-unstyled text-uppercase text-white active ps-4">
-          <router-link :to="{ path: `/unit/notes`, query: { name: 'databases' } }" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-pencil"></i> Notes</router-link>
+          <router-link :to="{ path: `/unit/notes`, query: { name: unit_id } }" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-pencil"></i> Notes</router-link>
         </li>
         <li class="list-unstyled text-uppercase text-white ps-4">
-          <router-link :to="{ path: `/unit/assignments`, query: { name: 'databases' } }" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-list-stars"></i>Assignments</router-link>
+          <router-link :to="{ path: `/unit/assignments`, query: { name: unit_id } }" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-list-stars"></i>Assignments</router-link>
         </li>
         <li class="list-unstyled text-uppercase text-white ps-4">
-          <router-link :to="{ path: `/unit/relevant_videos`, query: { name: 'databases' } }" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-file-play-fill"></i>Relevant Videos </router-link>
+          <router-link :to="{ path: `/unit/relevant_videos`, query: { name: unit_id } }" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-file-play-fill"></i>Relevant Videos </router-link>
 
         </li>
         <li class="list-unstyled text-uppercase text-white ps-4 ps-4">
-          <router-link :to="{ path: `/unit/relevant_links`, query: { name: 'databases' } }" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-link"></i>Relevant links</router-link>
+          <router-link :to="{ path: `/unit/relevant_links`, query: { name: unit_id } }" class="text-decoration-none text-white"><i style="color:#398BF6;" class="bi p-2 bi-link"></i>Relevant links</router-link>
 
         </li>
       </div>
@@ -91,7 +97,7 @@ onMounted(() => {
     <div class="col col-md-8 col-lg-8">
       <div class="card" style="width: 100%;  height: 100vh">
         <div class="card-header d-flex justify-content-between">
-          <h3>Notes</h3>
+          <p>{{ unit_details.unit_name }}</p>
           <button data-bs-target="#add_notes" data-bs-toggle="modal" class="btn btn-primary float-end"><i style="color:#398BF6;" class="bi p-2 bi-plus"></i>Add Notes</button>
         </div>
         <!-- Modal pop up start    for adding notes   -->
@@ -125,19 +131,21 @@ onMounted(() => {
         </div>
         <!-- Modal pop up end      -->
 
-        <p>Database overview</p>
-<!--        {{notes}}-->
-        <div style="border: solid 1px grey;" class="" v-for="note in notes" :key="note">
 
-           <h2>{{note.title}}</h2>
 
-              <p>{{note.notes_description}}</p>
-          <p v-if="valid_extensions.includes(showExtension(note.file))">
-            <router-link :to="{ path: `notes/read`, query: { name:note.file  } }"  class="text-decoration-none">Read Now</router-link>
-          </p>
-          <p v-else>
-            <a :href="storage_notes+note.file" class="text-decoration-none">Download {{ note.title }}</a>
-          </p>
+        <div  class="notes" >
+
+          <div  class="notes-conted border m-1 d-flex align-items-center flex-column  justify-content-center" v-for="note in notes" :key="note">
+            <h2 class="text-decoration-underline">{{note.title}}</h2>
+
+            <p>{{note.notes_description}}</p>
+            <p v-if="valid_extensions.includes(showExtension(note.file))">
+              <router-link :to="{ path: `notes/read`, query: { name:note.file  } }"  class="text-decoration-none btn btn-primary">Read Now</router-link>
+            </p>
+            <p v-else>
+              <a :href="storage_notes+note.file" class="text-decoration-none">Download {{ note.title }}</a>
+            </p>
+          </div>
 
         </div>
 
@@ -154,5 +162,9 @@ onMounted(() => {
 .active{
   background-color: #a8ed07;
   padding: 3px;
+}
+.notes{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 </style>

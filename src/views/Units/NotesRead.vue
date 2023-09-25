@@ -2,22 +2,28 @@
 <script setup>
 import Header from "@/views/includes/Header.vue";
 const router = useRouter();
-const unit_id = ref('');
 import {onMounted, ref} from "vue";
-import {useRouter} from "vue-router";
+
+import {useRoute, useRouter} from "vue-router";
 import {auth} from "@/compossables/auth";
 const {base_url,storage_notes,authHeader}=auth()
-onMounted(() => {
-  if (!router.currentRoute.value.query.name) {
-    // Redirect to a specific route when the "name" query parameter is missing
-    router.push('/all_units') // Replace with the actual route name
-  } else {
-    // Set groupName to the "name" query parameter value
-    unit_id.value = router.currentRoute.value.query.name
-  }})
+const unit_id = ref('');
+const route =  useRoute();
+unit_id.value = route.query.name;
+
+if(unit_id.value ===''){
+  router.push('/all_units')
+}
+
+function goBack(){
+  router.go(-1)
+}
 </script>
 <template>
-<!--<router-link class="btn btn-success m-3">Go back</router-link>-->
+
+  <button @click="goBack" class="text-decoration-none btn btn-primary">
+    <i style="color: yellow; font-size: 22px;" class="bi p-2 bi-house"></i> Go Back
+  </button>
 
   <embed :src="storage_notes + unit_id" type="application/pdf" width="100%" height="600px" /></template>
 

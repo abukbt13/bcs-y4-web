@@ -16,8 +16,6 @@ import Mydiscussion from "@/views/Dashboard/Mydiscussion.vue";
 import Login from "@/views/auth/Login.vue"
 import Register from "@/views/auth/Register.vue"
 import Group from "@/views/Group/Group.vue";
-import FirstSem from "@/views/includes/FirstSem.vue";
-import SecondSem from "@/views/includes/SecondSem.vue";
 import Unit from "@/views/Units/Unit.vue";
 import Notes from "@/views/Units/Notes.vue";
 import Assignments from "@/views/Units/Assignments.vue";
@@ -31,17 +29,6 @@ const router = createRouter({
     {
       path: '/',
       component: HomeView,
-      children:[
-        {
-          path: '/',
-          component: FirstSem
-        },
-        {
-          path: '/second_sem',
-          component: SecondSem
-        }
-      ]
-
     },
     {
       path: '/all_units',
