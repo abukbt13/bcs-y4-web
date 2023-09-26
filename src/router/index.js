@@ -18,7 +18,6 @@ import Register from "@/views/auth/Register.vue"
 import Group from "@/views/Group/Group.vue";
 import Unit from "@/views/Units/Unit.vue";
 import Notes from "@/views/Units/Notes.vue";
-import Assignments from "@/views/Units/Assignments.vue";
 import Relevant_Videos from "@/views/Units/Relevant_Videos.vue";
 import Relevant_Links from "@/views/Units/Relevant_Links.vue";
 import AllUnits from "@/views/Units/AllUnits.vue";
@@ -50,10 +49,7 @@ const router = createRouter({
           path: '/unit/notes/read',
           component: NotesRead
         },
-        {
-          path: '/unit/assignments',
-          component: Assignments
-        },
+
         {
           path: '/unit/relevant_videos',
           component: Relevant_Videos

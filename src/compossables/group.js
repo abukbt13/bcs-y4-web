@@ -1,6 +1,7 @@
 import axios from "axios";
 import {auth} from "@/compossables/auth";
 import {ref} from "vue";
+import Swal from "sweetalert2";
 const {base_url , authHeader}=auth()
 
 export function group(){
@@ -18,12 +19,19 @@ export function group(){
         formData.append('group_description',group_description.value)
         formData.append('group_category',group_category.value)
         const response = await axios.post(base_url.value+'group/create', formData,authHeader);
-        if(response.data.status==='failed'){
-            alert()
-            alert("A group exist with that name")
+        if(response.data.status === 'success'){
+            await  Swal.fire(
+                'Success!',
+                'Group created successfully',
+                'success'
+            )
         }
         else {
-            alert('error')
+          await  Swal.fire(
+                'Failed!',
+                'something went wrong try again!',
+                'warning'
+            )
         }
     }
 

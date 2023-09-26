@@ -1,7 +1,18 @@
 
 <script setup>
 import Header from "@/views/includes/Header.vue";
-</script>
+import {useRoute, useRouter} from "vue-router";
+import {ref} from "vue";
+const router = useRouter()
+const route = useRoute()
+const group_id = ref('')
+group_id.value = route.query.name;
+if(group_id.value ===''){
+  router.push('/show_group')
+}
+if(group_id.value==null){
+  router.push('/show_group')
+}</script>
 
 <template>
 
@@ -15,19 +26,19 @@ import Header from "@/views/includes/Header.vue";
       </div>
       <ul class="nav ps-4 nav-pills  nav-fill">
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ path: 'posts', query: { name: groupName } }">posts</router-link>
+          <router-link class="nav-link" :to="{ path: 'posts', query: { name: group_id } }">posts</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ path: 'discussion', query: { name: groupName } }">Discussion</router-link>
+          <router-link class="nav-link" :to="{ path: 'discussion', query: { name: group_id } }">Discussion</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ path: 'links', query: { name: groupName } }">Links</router-link>
+          <router-link class="nav-link" :to="{ path: 'links', query: { name: group_id } }">Links</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link active" :to="{ path: 'events', query: { name: groupName } }">Events</router-link>
+          <router-link class="nav-link active" :to="{ path: 'events', query: { name: group_id } }">Events</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ path: 'videos', query: { name: groupName } }">Videos</router-link>
+          <router-link class="nav-link" :to="{ path: 'videos', query: { name: group_id } }">Videos</router-link>
         </li>
 
       </ul>    </div>

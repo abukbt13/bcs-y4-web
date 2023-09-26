@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import axios from "axios";
 
 // Define a ref to store the captured name
@@ -8,11 +8,18 @@ const groupName = ref('');
 const  description = ref('')
 const  file = ref('')
 // Access the router instance
+const route = useRoute();
 const router = useRouter();
 import {auth} from "@/compossables/auth";
 import Header from "@/views/includes/Header.vue";
-
-
+const group_id = ref(null)
+group_id.value = route.query.name;
+if(group_id.value ===''){
+  router.push('/show_group')
+}
+if(group_id.value==null){
+  router.push('/show_group')
+}
 
 const {base_url,storage_posts,storage_profile,authHeader}=auth()
 import {group} from "@/compossables/group";
@@ -25,16 +32,15 @@ const posts = ref([])
 
 
 const showPosts = async () =>{
-  const res = await axios.get(base_url.value+'posts/show')
+  const res = await axios.get(`${base_url.value}posts/show/${group_id.value}`)
   posts.value =res.data.posts
-
 }
 
 const savePost = async () => {
   const formData = new FormData()
   formData.append('description', description.value)
   formData.append('file', file.value)
-  formData.append('group', groupName.value)
+  formData.append('group_id', group_id.value)
   const response = await axios.post(base_url.value+'post/upload', formData,authHeader);
   if (response.status === 200) {
    await showPosts()
@@ -86,13 +92,7 @@ const saveComment=async (id)=>{
 onMounted(() => {
   showPosts()
   showGroup()
-  if (!router.currentRoute.value.query.name) {
-    // Redirect to a specific route when the "name" query parameter is missing
-    router.push('/show_group') // Replace with the actual route name
-  } else {
-    // Set groupName to the "name" query parameter value
-    groupName.value = router.currentRoute.value.query.name
-  }})
+})
 
 
 </script>
@@ -110,19 +110,19 @@ onMounted(() => {
       </div>
       <ul class="nav ps-4 nav-pills  nav-fill">
         <li class="nav-item">
-          <router-link class="nav-link active" :to="{ path: 'posts', query: { name: groupName } }">posts</router-link>
+          <router-link class="nav-link active" :to="{ path: 'posts', query: { name: group_id } }">posts</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ path: 'discussion', query: { name: groupName } }">Discussion</router-link>
+          <router-link class="nav-link" :to="{ path: 'discussion', query: { name: group_id } }">Discussion</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ path: 'links', query: { name: groupName } }">Links</router-link>
+          <router-link class="nav-link" :to="{ path: 'links', query: { name: group_id } }">Links</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ path: 'events', query: { name: groupName } }">Events</router-link>
+          <router-link class="nav-link" :to="{ path: 'events', query: { name: group_id } }">Events</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ path: 'videos', query: { name: groupName } }">Videos</router-link>
+          <router-link class="nav-link" :to="{ path: 'videos', query: { name: group_id } }">Videos</router-link>
         </li>
 
       </ul>
@@ -177,9 +177,12 @@ onMounted(() => {
           <!-- Modal pop up end      -->
 
           <div class=""  v-for="group in groups" :key="group">
-            <router-link :to="{ path: `/show_group/posts`, query: { name: group.group_id } }"  class="text-decoration-none my-4 py-3 text-uppercase">
-              <div data-bs-dismiss="offcanvas" class="button btn" >{{ group.group_name }}</div>
-            </router-link>
+            <a
+                :href="`/show_group/posts?name=${group.group_id}`"
+                class="text-decoration-none my-4 py-3 text-uppercase"
+            >
+              {{ group.group_name }}
+            </a>
           </div>
         </div>
       </div>
@@ -235,9 +238,12 @@ onMounted(() => {
         <!-- Modal pop up end      -->
 
         <div class="" v-for="group in groups" :key="group">
-          <router-link :to="{ path: `/show_group/posts`, query: { name: group.group_id } }" class="text-decoration-none my-4 py-3 text-uppercase">
+          <a
+              :href="`/show_group/posts?name=${group.group_id}`"
+              class="text-decoration-none my-4 py-3 text-uppercase"
+          >
             {{ group.group_name }}
-          </router-link>
+          </a>
         </div>
       </div>
     </div>
