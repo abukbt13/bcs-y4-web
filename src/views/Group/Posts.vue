@@ -161,6 +161,8 @@ onMounted(() => {
                       <option value="Robotics">Robotics</option>
                       <option value="Android">Android</option>
                       <option value="Databases">Databases</option>
+                      <option value="Databases">Artificial Inteligence</option>
+                      <option value="Databases">Website</option>
                       <option value="Other">Other</option>
                     </select>
                     <label for="">Group Description</label>
@@ -199,13 +201,13 @@ onMounted(() => {
 
 
         <div class="d-flex bg-light justify-content-between align-items-center">
-          <p class="pt-3" style="font-size: 23px;">My Groups</p>
-          <button class="btn btn-primary btn-sm" data-bs-target="#create_group" data-bs-toggle="modal">
+          <p class="pt-3" style="font-size: 23px;"> Groups</p>
+          <button disabled class="btn btn-primary btn-sm" data-bs-target="#create" data-bs-toggle="modal">
             <i class="bi bi-plus"></i>
-            Create group</button>
+            Create groupg</button>
         </div>
           <!-- Modal pop up start    for create group  -->
-        <div class="modal fade" id="create_group" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -248,11 +250,11 @@ onMounted(() => {
       </div>
     </div>
     <!--    posts start here-->
-    <div class="col m-1 col-md-5 col-lg-5 posts">
+    <div class="col m-1 col-md-5 col-lg-5 posts mb-3">
       <!--      CREATE POST-->
             <div class="create-post d-flex  justify-content-between align-items-center">
                <p class="text-uppercase mt-3 ps-2">What do you wish to share</p>
-              <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#create">
+              <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#create-post">
               <i class="bi bi-plus"></i>
               Create a post
             </button>
@@ -260,7 +262,7 @@ onMounted(() => {
 
 
       <!-- Modal -->
-                  <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="create-post" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -287,7 +289,7 @@ onMounted(() => {
                   </div>
       <!--      CREATE POST-->
 
-    <div @mouseenter="showComment(post.id)" class="single-post" v-for="post in posts" :key="post">
+    <div @mouseenter="showComment(post.id)" class="single-post border-bottom mb-1" v-for="post in posts" :key="post">
       <div class="d-flex align-items-center">
         <img :src="storage_profile+post.profile" class="rounded" width="50" height="50" alt="No image"> <p class="ms-2 mt-3">Alan Kibet</p></div>
       <p>
@@ -342,6 +344,7 @@ li:hover{
   min-height: 90vh;
   max-height: 118vh;
   overflow: scroll;
+  padding-bottom: 3rem;
 }
 .feed{
   padding-bottom: 1rem;
